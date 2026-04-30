@@ -3,6 +3,8 @@
 import { FetchApi } from '../../../lib/api';
 import { useState, ReactNode } from 'react';
 import RequestRow, { Row, Field } from "../../components/RequestRow"
+import ActiveAccessTab from "./ActiveAccessTab";
+
 
 interface TabProps {
     id: string;
@@ -45,9 +47,35 @@ const tabs: TabProps[] = [
         label: "Active Access",
         children:
             <div>
-                <p>
-                    List of permission approved
-                </p>
+                <ActiveAccessTab
+                    permission={[
+                        {
+                            id: "1",
+                            company: "Acme Corp",
+                            date: "2025-01-15",
+                            reason: "Employment verification",
+                            workerInfo: [
+                                { id: "f1", label: "Name" },
+                                { id: "f2", label: "Email" },
+                                { id: "f3", label: "Work History" },
+                            ],
+                        },
+                        {
+                            id: "2",
+                            company: "Globex Inc",
+                            date: "2025-03-02",
+                            reason: "Selling your data to other people",
+                            workerInfo: [
+                                { id: "f4", label: "Name" },
+                                { id: "f5", label: "Phone" },
+                            ],
+                        },
+                    ]}
+                    onRevoke={(permissionId, workerInfoId) => console.log("Revoke", permissionId, workerInfoId)}
+                />
+
+
+
             </div>
     }
 ]
@@ -102,17 +130,19 @@ export default function Page() {
     return (
         <main className="p-8">
             <div>
-                <h1 className="text-2xl font-semibold mb-6">Data Access</h1>
+                <h1 className="text-2xl font-semibold mb-6 text-gray-900">Data Access</h1>
+
+
             </div>
-            <div className="flex border-b border-gray-200 dark:border-gray-700">
+            <div className="flex border-b border-gray-200">
                 {tabs.map(({ id, label }) =>
                     <button
                         key={id}
                         onClick={() => setActiveTab(id)}
                         className={`
                         px-5 py-2.5 text-sm font-medium border-b-2 -mb-px transition-colors cursor-pointer 
-                        ${activeTab === id ? "border-gray-900 text-gray-900 dark:border-white dark:text-white" :
-                                "border-transparent text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"}`}
+                        ${activeTab === id ? "border-gray-900 text-gray-900" :
+                                "border-transparent text-gray-500 hover:text-gray-700 "}`}
                     >
                         {label}
                     </button>
