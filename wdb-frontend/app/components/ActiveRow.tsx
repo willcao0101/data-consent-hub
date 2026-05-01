@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { X, Info } from "lucide-react";
+import RevokeConfirmModal from "./RevokeConfirmModal";
+
 
 export interface ActiveField {
     id: string;
@@ -29,6 +31,9 @@ export default function ActiveRow({ id, company, date, workerInfo, reason, onRev
             prev.includes(fieldId) ? prev.filter((f) => f !== fieldId) : [...prev, fieldId]
         );
     };
+
+    const [showModal, setShowModal] = useState(false);
+
 
     return (
         <div className="flex justify-between items-center px-5 py-4 border-b border-gray-200 ">
@@ -60,12 +65,27 @@ export default function ActiveRow({ id, company, date, workerInfo, reason, onRev
             </div>
 
             <button
-                onClick={() => onRevoke(id, checked)}
+                onClick={() => setShowModal(true)}
                 disabled={checked.length === 0}
                 className="bg-red-400 hover:bg-red-500 disabled:opacity-40 disabled:cursor-not-allowed text-white rounded-xl p-2 cursor-pointer transition-colors"
             >
                 <X size={20} strokeWidth={2.5} />
             </button>
+
+            {showModal && (
+                <RevokeConfirmModal
+                    company={company}
+                    selectedFields={workerInfo
+                        .filter((f) => checked.includes(f.id))
+                        .map((f) => f.label)}
+                    onConfirm={() => {
+                        onRevoke(id, checked);
+                        setShowModal(false);
+                    }}
+                    onCancel={() => setShowModal(false)}
+                />
+            )}
+
 
         </div>
     );

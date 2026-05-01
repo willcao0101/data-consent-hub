@@ -60,6 +60,10 @@ builder.Services.AddSingleton<IBlockchainService, BlockchainService>();
 // Services
 builder.Services.AddScoped<IWorkerDashboardService, WorkerDashboardServiceImpl>();
 
+builder.Services.AddScoped<IPermissionRepository, PermissionRepoImpl>();
+builder.Services.AddScoped<IPermissionService, PermissionServiceImpl>();
+builder.Services.AddScoped<IEmployerRepository, EmployerRepoImpl>();
+
 var app = builder.Build();
 app.UseCors("FrontendPolicy");
 
