@@ -1,19 +1,19 @@
 name: Mirror Sync
 
-  on:
-    schedule:
-      - cron: '0 */6 * * *'
-    workflow_dispatch:
+on:
+  schedule:
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
 
-  jobs:
-    sync:
-      runs-on: ubuntu-latest
-      steps:
-        - name: Sync from upstream
-          run: |
-            git clone --mirror https://github.com/mussesseiniris/WorkerDataBlockchain.git upstream.git
-            cd upstream.git
-            git push --force \
-              https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/willcao0101/data-consent-hub.git \
-              'refs/heads/*:refs/heads/*' \
-              'refs/tags/*:refs/tags/*'
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Sync from upstream
+        run: |
+          git clone --mirror https://github.com/mussesseiniris/WorkerDataBlockchain.git upstream.git
+          cd upstream.git
+          git push --force \
+            https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/willcao0101/data-consent-hub.git \
+            'refs/heads/*:refs/heads/*' \
+            'refs/tags/*:refs/tags/*'
