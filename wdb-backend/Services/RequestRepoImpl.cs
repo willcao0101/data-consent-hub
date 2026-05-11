@@ -14,7 +14,7 @@ public class RequestRepoImpl : IRequestRepository
     {
         _dbContext = dbContext;
     }
- 
+
     public async Task<Request> AddAsync(Guid employerId, Guid workerId, string reason, CancellationToken cancellationToken = default)
     {
         var request = new Request { EmployerId = employerId, WorkerId = workerId, Reason = reason };
@@ -24,7 +24,7 @@ public class RequestRepoImpl : IRequestRepository
     }
 
 
-    public Task<LinkedList<Request>> GetAllByEmployerIdAsync(Guid employerId, CancellationToken cancellationToken = default)
+    public Task<List<Request>> GetAllByEmployerIdAsync(Guid employerId, CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();
     }
