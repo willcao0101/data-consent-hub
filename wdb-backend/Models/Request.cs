@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations.Schema;
+
 namespace wdb_backend.Models;
 
 /// <summary>
@@ -31,12 +32,14 @@ public class Request
     [Column("created_at")]
     [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
     public DateTime CreatedAt { get; set; }
-    
-    /// <summary>
-    /// The reason for why the employer submits a request. 
-    /// </summary>
-    [Column("reason")]    
-     public required string Reason { get; set; }
 
+    /// <summary>
+    /// The reason for why the employer submits a request.
+    /// </summary>
+    [Column("reason")]
+    public required string Reason { get; set; }
+
+    public WorkerInfo WorkerInfo { get; set; }
+    public Worker Worker { get; set; }
+    public List<Permission> Permissions { get; set; }
 }
-    
